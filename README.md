@@ -10,6 +10,14 @@
 
 **This project is fundamentally different from Vits. Vits is TTS and this project is SVC. TTS cannot be carried out in this project, and Vits cannot carry out SVC, and the two project models are not universal.**
 
+## References
++ [【Sovits4 0一键包】快领走属于你自己的AI歌姬吧！AI翻唱训练教学](https://youtu.be/etnBPiCR-uw)
++ [【AI翻唱】“超详细”！Sovits4.0手把手详细教学！](https://youtu.be/VTWTQ5l9eHI)
+### Search Keywords
++ Sovits4.0
++ svc-develop-team
++ soft vits
+
 ## Announcement
 
 The project was developed to allow the developers' favorite anime characters to sing, Anything involving real people is a departure from the intent of the developer.
