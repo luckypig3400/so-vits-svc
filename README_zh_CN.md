@@ -1,10 +1,8 @@
-# 马上要高考了，SvcDevelopTeam在此助各位考生高考旗开得胜，超常发挥。
-
 # SoftVC VITS Singing Voice Conversion
 
 [**English**](./README.md) | [**中文简体**](./README_zh_CN.md)
 
-#### ✨ 带有F0曲线编辑器，角色混合时间轴编辑器的推理端 (Onnx模型的用途) : [MoeVoiceStudio(即将到来)](https://github.com/NaruseMioShirakana/MoeVoiceStudio)
+#### ✨ 带有F0曲线编辑器，角色混合时间轴编辑器的推理端 (Onnx模型的用途) : [MoeVoiceStudio](https://github.com/NaruseMioShirakana/MoeVoiceStudio)
 
 #### ✨ 改善了交互的一个分支推荐：[34j/so-vits-svc-fork](https://github.com/34j/so-vits-svc-fork)
 
@@ -75,12 +73,19 @@
 **以下编码器需要选择一个使用**
 
 ##### **1. 若使用contentvec作为声音编码器（推荐）**
+
+`vec768l12`与`vec256l9` 需要该编码器
+
 + contentvec ：[checkpoint_best_legacy_500.pt](https://ibm.box.com/s/z1wgl1stco8ffooyatzdwsqn2psd9lrr)
   + 放在`pretrain`目录下
 
+或者下载下面的ContentVec，大小只有199MB，但效果相同:
++ contentvec ：[hubert_base.pt](https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/hubert_base.pt)
+  + 将文件名改为`checkpoint_best_legacy_500.pt`后，放在`pretrain`目录下
+
 ```shell
 # contentvec
-wget -P pretrain/ http://obs.cstcloud.cn/share/obs/sankagenkeshi/checkpoint_best_legacy_500.pt
+wget -P pretrain/ https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/hubert_base.pt -O checkpoint_best_legacy_500.pt
 # 也可手动下载放在pretrain目录
 ```
 
@@ -89,12 +94,25 @@ wget -P pretrain/ http://obs.cstcloud.cn/share/obs/sankagenkeshi/checkpoint_best
   + 放在`pretrain`目录下
 
 ##### **3. 若使用Whisper-ppg作为声音编码器**
-- download model at [medium.pt](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt)
-  - 放在`pretrain`目录下
++ 下载模型 [medium.pt](https://openaipublic.azureedge.net/main/whisper/models/345ae4da62f9b3d59415adc60127b97c714f32e89e936602e85993674d08dcb1/medium.pt), 该模型适配`whisper-ppg`
++ 下载模型 [large-v2.pt](https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt), 该模型适配`whisper-ppg-large`
+  + 放在`pretrain`目录下
  
-##### **4. 若使用OnnxHubert/ContentVec作为声音编码器**
-- download model at [MoeSS-SUBModel](https://huggingface.co/NaruseMioShirakana/MoeSS-SUBModel/tree/main)
-  - 放在`pretrain`目录下
+##### **4. 若使用cnhubertlarge作为声音编码器**
++ 下载模型 [chinese-hubert-large-fairseq-ckpt.pt](https://huggingface.co/TencentGameMate/chinese-hubert-large/resolve/main/chinese-hubert-large-fairseq-ckpt.pt)
+  + 放在`pretrain`目录下
+
+##### **5. 若使用dphubert作为声音编码器**
++ 下载模型 [DPHuBERT-sp0.75.pth](https://huggingface.co/pyf98/DPHuBERT/resolve/main/DPHuBERT-sp0.75.pth)
+  + 放在`pretrain`目录下
+
+##### **6. 若使用WavLM作为声音编码器**
++ 下载模型 [WavLM-Base+.pt](https://valle.blob.core.windows.net/share/wavlm/WavLM-Base+.pt?sv=2020-08-04&st=2023-03-01T07%3A51%3A05Z&se=2033-03-02T07%3A51%3A00Z&sr=c&sp=rl&sig=QJXmSJG9DbMKf48UDIU1MfzIro8HQOf3sqlNXiflY1I%3D), 该模型适配`wavlmbase+`
+  + 放在`pretrain`目录下
+
+##### **7. 若使用OnnxHubert/ContentVec作为声音编码器**
++ 下载模型 [MoeSS-SUBModel](https://huggingface.co/NaruseMioShirakana/MoeSS-SUBModel/tree/main)
+  + 放在`pretrain`目录下
 
 #### **编码器列表**
 - "vec768l12"
@@ -106,6 +124,10 @@ wget -P pretrain/ http://obs.cstcloud.cn/share/obs/sankagenkeshi/checkpoint_best
 - "hubertsoft-onnx"
 - "hubertsoft"
 - "whisper-ppg"
+- "cnhubertlarge"
+- "dphubert"
+- "whisper-ppg-large"
+- "wavlmbase+"
 
 #### **可选项(强烈建议使用)**
 
@@ -117,7 +139,7 @@ wget -P pretrain/ http://obs.cstcloud.cn/share/obs/sankagenkeshi/checkpoint_best
 
 从svc-develop-team(待定)或任何其他地方获取Sovits底模
 
-扩散模型引用了[DDSP-SVC](https://github.com/yxlllc/DDSP-SVC)的Diffusion Model，底模与[DDSP-SVC](https://github.com/yxlllc/DDSP-SVC)的扩散模型底模通用，可以去[DDSP-SVC](https://github.com/yxlllc/DDSP-SVC)获取扩散模型的底模
+扩散模型引用了[Diffusion-SVC](https://github.com/CNChTu/Diffusion-SVC)的Diffusion Model，底模与[Diffusion-SVC](https://github.com/CNChTu/Diffusion-SVC)的扩散模型底模通用，可以去[Diffusion-SVC](https://github.com/CNChTu/Diffusion-SVC)获取扩散模型的底模
 
 虽然底模一般不会引起什么版权问题，但还是请注意一下，比如事先询问作者，又或者作者在模型描述中明确写明了可行的用途
 
@@ -184,32 +206,10 @@ python resample.py
 
 #### 注意
 
-虽然本项目拥有重采样、转换单声道与响度匹配的脚本resample.py，但是默认的响度匹配是匹配到0db。这可能会造成音质的受损。而python的响度匹配包pyloudnorm无法对电平进行压限，这会导致爆音。所以建议可以考虑使用专业声音处理软件如`adobe audition`等软件做重采样、转换单声道与响度匹配处理。若使用其他软件做重采样、转换单声道与响度匹配，则可以不运行上述命令。
+虽然本项目拥有重采样、转换单声道与响度匹配的脚本resample.py，但是默认的响度匹配是匹配到0db。这可能会造成音质的受损。而python的响度匹配包pyloudnorm无法对电平进行压限，这会导致爆音。所以建议可以考虑使用专业声音处理软件如`adobe audition`等软件做响度匹配处理。若已经使用其他软件做响度匹配，可以在运行上述命令时添加`--skip_loudnorm`跳过响度匹配步骤。如：
 
-若手动处理音频，需要以以下文件结构将数据集放入dataset目录即可。若无该目录可以自行创建。
-
-```
-dataset
-└───44k
-    ├───speaker0
-    │   ├───xxx1-xxx1.wav
-    │   ├───...
-    │   └───Lxx-0xx8.wav
-    └───speaker1
-        ├───xx2-0xxx2.wav
-        ├───...
-        └───xxx7-xxx007.wav
-```
-
-可以自定义说话人名称
-
-```
-dataset
-└───44k
-     └───suijiSUI
-           ├───1.wav
-           ├───...
-           └───25788785-20221210-200143-856_01_(Vocals)_0_0.wav
+```shell
+python resample.py --skip_loudnorm
 ```
 
 ### 2. 自动划分训练集、验证集，以及自动生成配置文件
@@ -218,13 +218,17 @@ dataset
 python preprocess_flist_config.py --speech_encoder vec768l12
 ```
 
-speech_encoder拥有四个选择
+speech_encoder拥有以下选择
 
 ```
 vec768l12
 vec256l9
 hubertsoft
 whisper-ppg
+whisper-ppg-large
+cnhubertlarge
+dphubert
+wavlmbase+
 ```
 
 如果省略speech_encoder参数，默认值为vec768l12
@@ -241,12 +245,34 @@ python preprocess_flist_config.py --speech_encoder vec768l12 --vol_aug
 
 #### 此时可以在生成的config.json与diffusion.yaml修改部分参数
 
+##### config.json
+
 * `keep_ckpts`：训练时保留最后几个模型，`0`为保留所有，默认只保留最后`3`个
 
-* `all_in_mem`,`cache_all_data`：加载所有数据集到内存中，某些平台的硬盘IO过于低下、同时内存容量 **远大于** 数据集体积时可以启用
+* `all_in_mem`：加载所有数据集到内存中，某些平台的硬盘IO过于低下、同时内存容量 **远大于** 数据集体积时可以启用
 
 * `batch_size`：单次训练加载到GPU的数据量，调整到低于显存容量的大小即可
 
+* `vocoder_name` : 选择一种声码器，默认为`nsf-hifigan`.
+
+##### diffusion.yaml
+
+* `cache_all_data`：加载所有数据集到内存中，某些平台的硬盘IO过于低下、同时内存容量 **远大于** 数据集体积时可以启用
+
+* `duration`：训练时音频切片时长，可根据显存大小调整，**注意，该值必须小于训练集内音频的最短时间！**
+
+* `batch_size`：单次训练加载到GPU的数据量，调整到低于显存容量的大小即可
+
+* `timesteps` : 扩散模型总步数，默认为1000.
+
+* `k_step_max` : 训练时可仅训练`k_step_max`步扩散以节约训练时间，注意，该值必须小于`timesteps`，0为训练整个扩散模型，**注意，如果不训练整个扩散模型将无法使用仅扩散模型推理!**
+  
+##### **声码器列表**
+
+```
+nsf-hifigan
+nsf-snake-hifigan
+```
 
 ### 3. 生成hubert与f0
 
@@ -275,7 +301,13 @@ python preprocess_hubert_f0.py --f0_predictor dio --use_diff
 
 执行完以上步骤后 dataset 目录便是预处理完成的数据，可以删除 dataset_raw 文件夹了
 
-## 🏋️‍♀️ 训练
+## 🏋️‍ 训练
+
+### 主模型训练
+
+```shell
+python train.py -c configs/config.json -m 44k
+```
 
 ### 扩散模型（可选）
 
@@ -283,12 +315,6 @@ python preprocess_hubert_f0.py --f0_predictor dio --use_diff
 
 ```shell
 python train_diff.py -c configs/diffusion.yaml
-```
-
-### 主模型训练
-
-```shell
-python train.py -c configs/config.json -m 44k
 ```
 
 模型训练结束后，模型文件保存在`logs/44k`目录下，扩散模型在`logs/44k/diffusion`下
@@ -314,7 +340,7 @@ python inference_main.py -m "logs/44k/G_30400.pth" -c "configs/config.json" -n "
 + `-lg` | `--linear_gradient`：两段音频切片的交叉淡入长度，如果强制切片后出现人声不连贯可调整该数值，如果连贯建议采用默认值0，单位为秒
 + `-f0p` | `--f0_predictor`：选择F0预测器,可选择crepe,pm,dio,harvest,默认为pm(注意：crepe为原F0使用均值滤波器)
 + `-a` | `--auto_predict_f0`：语音转换自动预测音高，转换歌声时不要打开这个会严重跑调
-+ `-cm` | `--cluster_model_path`：聚类模型或特征检索索引路径，如果没有训练聚类或特征检索则随便填
++ `-cm` | `--cluster_model_path`：聚类模型或特征检索索引路径，留空则自动设为各方案模型的默认路径，如果没有训练聚类或特征检索则随便填
 + `-cr` | `--cluster_infer_ratio`：聚类方案或特征检索占比，范围0-1，若没有训练聚类模型或特征检索则默认0即可
 + `-eh` | `--enhance`：是否使用NSF_HIFIGAN增强器,该选项对部分训练集少的模型有一定的音质增强效果，但是对训练好的模型有反面效果，默认关闭
 + `-shd` | `--shallow_diffusion`：是否使用浅层扩散，使用后可解决一部分电音问题，默认关闭，该选项打开时，NSF_HIFIGAN增强器将会被禁止
@@ -331,7 +357,7 @@ python inference_main.py -m "logs/44k/G_30400.pth" -c "configs/config.json" -n "
 
 ### 注意！
 
-如果使用`whisper-ppg` speech encoder 进行推理，需要将`--clip`设置为25，`-lg`设置为1。否则将无法正常推理。
+如果使用`whisper-ppg` 声音编码器进行推理，需要将`--clip`设置为25，`-lg`设置为1。否则将无法正常推理。
 
 ## 🤔 可选项
 
@@ -353,12 +379,12 @@ python inference_main.py -m "logs/44k/G_30400.pth" -c "configs/config.json" -n "
   + 执行`python cluster/train_cluster.py`，模型的输出会在`logs/44k/kmeans_10000.pt`
   + 聚类模型目前可以使用gpu进行训练，执行`python cluster/train_cluster.py --gpu`
 + 推理过程：
-  + `inference_main.py`中指定`cluster_model_path`
+  + `inference_main.py`中指定`cluster_model_path` 为模型输出文件, 留空则默认为`logs/44k/kmeans_10000.pt`
   + `inference_main.py`中指定`cluster_infer_ratio`，`0`为完全不使用聚类，`1`为只使用聚类，通常设置`0.5`即可
 
 ### 特征检索
 
-介绍：跟聚类方案可以减小音色泄漏，咬字比聚类稍好，但会降低推理速度，采用了融合的方式，可以线性控制特征检索与非特征检索的占比，
+介绍：跟聚类方案一样可以减小音色泄漏，咬字比聚类稍好，但会降低推理速度，采用了融合的方式，可以线性控制特征检索与非特征检索的占比，
 
 + 训练过程：
   首先需要在生成hubert与f0后执行：
@@ -370,8 +396,8 @@ python train_index.py -c configs/config.json
 模型的输出会在`logs/44k/feature_and_index.pkl`
 
 + 推理过程：
-  + 需要首先制定`--feature_retrieval`，此时聚类方案会自动切换到特征检索方案
-  + `inference_main.py`中指定`cluster_model_path` 为模型输出文件
+  + 需要首先指定`--feature_retrieval`，此时聚类方案会自动切换到特征检索方案
+  + `inference_main.py`中指定`cluster_model_path` 为模型输出文件, 留空则默认为`logs/44k/feature_and_index.pkl`
   + `inference_main.py`中指定`cluster_infer_ratio`，`0`为完全不使用特征检索，`1`为只使用特征检索，通常设置`0.5`即可
 
 ### [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/svc-develop-team/so-vits-svc/blob/4.1-Stable/sovits4_for_colab.ipynb) [sovits4_for_colab.ipynb](https://colab.research.google.com/github/svc-develop-team/so-vits-svc/blob/4.1-Stable/sovits4_for_colab.ipynb)
@@ -434,6 +460,28 @@ python compress_model.py -c="configs/config.json" -i="logs/44k/G_30400.pth" -o="
 
 注意：Hubert Onnx模型请使用MoeSS提供的模型，目前无法自行导出（fairseq中Hubert有不少onnx不支持的算子和涉及到常量的东西，在导出时会报错或者导出的模型输入输出shape和结果都有问题）
 
+
+## 📎 引用及论文
+
+| URL | 名称 | 标题 | 源码 |
+| --- | ----------- | ----- | --------------------- |
+|[2106.06103](https://arxiv.org/abs/2106.06103) | VITS (Synthesizer)| Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech | [jaywalnut310/vits](https://github.com/jaywalnut310/vits) |
+|[2111.02392](https://arxiv.org/abs/2111.02392) | SoftVC (Speech Encoder)| A Comparison of Discrete and Soft Speech Units for Improved Voice Conversion | [bshall/hubert](https://github.com/bshall/hubert) |
+|[2204.09224](https://arxiv.org/abs/2204.09224) | ContentVec (Speech Encoder)| ContentVec: An Improved Self-Supervised Speech Representation by Disentangling Speakers | [auspicious3000/contentvec](https://github.com/auspicious3000/contentvec) |
+|[2212.04356](https://arxiv.org/abs/2212.04356) | Whisper (Speech Encoder) | Robust Speech Recognition via Large-Scale Weak Supervision | [openai/whisper](https://github.com/openai/whisper) |
+|[2110.13900](https://arxiv.org/abs/2110.13900) | WavLM (Speech Encoder) | WavLM: Large-Scale Self-Supervised Pre-Training for Full Stack Speech Processing | [microsoft/unilm/wavlm](https://github.com/microsoft/unilm/tree/master/wavlm) |
+|[2305.17651](https://arxiv.org/abs/2305.17651) | DPHubert (Speech Encoder) | DPHuBERT: Joint Distillation and Pruning of Self-Supervised Speech Models | [pyf98/DPHuBERT](https://github.com/pyf98/DPHuBERT) |
+|[DOI:10.21437/Interspeech.2017-68](http://dx.doi.org/10.21437/Interspeech.2017-68) | Harvest (F0 Predictor) | Harvest: A high-performance fundamental frequency estimator from speech signals | [mmorise/World/harvest](https://github.com/mmorise/World/blob/master/src/harvest.cpp) |
+|[aes35-000039](https://www.aes.org/e-lib/online/browse.cfm?elib=15165) | Dio (F0 Predictor) | Fast and reliable F0 estimation method based on the period extraction of vocal fold vibration of singing voice and speech | [mmorise/World/dio](https://github.com/mmorise/World/blob/master/src/dio.cpp) |
+|[8461329](https://ieeexplore.ieee.org/document/8461329) | Crepe (F0 Predictor) | Crepe: A Convolutional Representation for Pitch Estimation | [maxrmorrison/torchcrepe](https://github.com/maxrmorrison/torchcrepe) |
+|[DOI:10.1016/j.wocn.2018.07.001](https://doi.org/10.1016/j.wocn.2018.07.001) | Parselmouth (F0 Predictor) | Introducing Parselmouth: A Python interface to Praat | [YannickJadoul/Parselmouth](https://github.com/YannickJadoul/Parselmouth) |
+|[2010.05646](https://arxiv.org/abs/2010.05646) | HIFIGAN (Vocoder) | HiFi-GAN: Generative Adversarial Networks for Efficient and High Fidelity Speech Synthesis | [jik876/hifi-gan](https://github.com/jik876/hifi-gan) |
+|[1810.11946](https://arxiv.org/abs/1810.11946.pdf) | NSF (Vocoder) | Neural source-filter-based waveform model for statistical parametric speech synthesis | [openvpi/DiffSinger/modules/nsf_hifigan](https://github.com/openvpi/DiffSinger/tree/refactor/modules/nsf_hifigan)
+|[2006.08195](https://arxiv.org/abs/2006.08195) | Snake (Vocoder) | Neural Networks Fail to Learn Periodic Functions and How to Fix It | [EdwardDixon/snake](https://github.com/EdwardDixon/snake)
+|[2105.02446v3](https://arxiv.org/abs/2105.02446v3) | Shallow Diffusion (PostProcessing)| DiffSinger: Singing Voice Synthesis via Shallow Diffusion Mechanism | [CNChTu/Diffusion-SVC](https://github.com/CNChTu/Diffusion-SVC) |
+|[K-means](https://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=01D65490BADCC216F350D06F84D721AD?doi=10.1.1.308.8619&rep=rep1&type=pdf) | Feature K-means Clustering (PreProcessing)| Some methods for classification and analysis of multivariate observations | 本代码库 |
+| | Feature TopK Retrieval (PreProcessing)| Retrieval based Voice Conversion | [RVC-Project/Retrieval-based-Voice-Conversion-WebUI](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI) |
+
 ## ☀️ 旧贡献者
 
 因为某些原因原作者进行了删库处理，本仓库重建之初由于组织成员疏忽直接重新上传了所有文件导致以前的contributors全部木大，现在在README里重新添加一个旧贡献者列表
@@ -475,6 +523,8 @@ python compress_model.py -c="configs/config.json" -i="logs/44k/G_30400.pth" -o="
 #### 《[中华人民共和国刑法](http://gongbao.court.gov.cn/Details/f8e30d0689b23f57bfc782d21035c3.html?sw=中华人民共和国刑法)》
 
 #### 《[中华人民共和国民法典](http://gongbao.court.gov.cn/Details/51eb6750b8361f79be8f90d09bc202.html)》
+
+#### 《[中华人民共和国合同法](http://www.npc.gov.cn/zgrdw/npc/lfzt/rlyw/2016-07/01/content_1992739.htm)》
 
 ## 💪 感谢所有的贡献者
 <a href="https://github.com/svc-develop-team/so-vits-svc/graphs/contributors" target="_blank">

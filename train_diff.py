@@ -1,9 +1,10 @@
-import os
 import argparse
+
 import torch
 from torch.optim import lr_scheduler
-from diffusion.logger import utils
+
 from diffusion.data_loaders import get_data_loaders
+from diffusion.logger import utils
 from diffusion.solver import train
 from diffusion.unit2mel import Unit2Mel
 from diffusion.vocoder import Vocoder
@@ -41,8 +42,12 @@ if __name__ == '__main__':
                 vocoder.dimension,
                 args.model.n_layers,
                 args.model.n_chans,
-                args.model.n_hidden)
+                args.model.n_hidden,
+                args.model.timesteps,
+                args.model.k_step_max
+                )
     
+    print(f' > INFO: now model timesteps is {model.timesteps}, and k_step_max is {model.k_step_max}')
     
     # load parameters
     optimizer = torch.optim.AdamW(model.parameters())
